@@ -44,7 +44,7 @@ const calculateCompAPY = async (cToken, ticker, underlyingAssetDecimals) => {
   /* as part of the liquidity mining program */
   let compSpeed = await Compound.eth.read(
     comptroller,
-    'function compSpeeds(address cToken) public returns (uint)',
+    'function compSpeeds(address cToken) public view returns (uint)',
     [cToken],
     {provider}
   );
