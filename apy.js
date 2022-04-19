@@ -107,3 +107,16 @@ const calculateCompAPY = async (cToken, ticker, underlyingAssetDecimals) => {
   /* return percentage */
   return 100 * compTokenUSDInYear;
 };
+
+export const calculateAPY = async (cTokenTicker, underlyingTokenTicker) => {
+  const underlyingTokenDecimails = Compound.decimals[cTokenTicker];
+  const cTokenAddress = Compound.util.getAddress(cTokenTicker);
+  const [supplyAPY, compoundAPY] = await Promise.all([
+    calculateSupplyAPY(cTokenAddress),
+    calculateCompAPY(cTokenAddress, underlyingTokenTicker, underlyingTokenDecimails)
+  ]);
+  
+  return {
+    ticker: underlyingTokenTicker, supplyAPY, compoundAPY
+  };
+};
